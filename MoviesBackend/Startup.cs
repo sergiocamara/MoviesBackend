@@ -69,6 +69,8 @@ namespace MoviesBackend
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseCors(builder => builder.WithOrigins("http://localhost:4200").AllowAnyHeader());
+
 
             app.UseEndpoints(endpoints =>
             {
