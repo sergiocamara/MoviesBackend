@@ -1,0 +1,29 @@
+services:
+  db:
+    command: --default-authentication-plugin=mysql_native_password
+    container_name: mysqlMovie
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+    image: mysql
+    ports:
+    - published: 3306
+      target: 3306
+    restart: always
+  moviesbackend:
+    build:
+      context: C:\Users\scamara\Documents\Movies\Backend\MoviesBackend
+      dockerfile: MoviesBackend/Dockerfile
+    depends_on:
+      db:
+        condition: service_started
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: https://+:443;http://+:80
+    image: moviesbackend
+    ports:
+    - target: 80
+    - target: 443
+    volumes:
+    - C:\Users\scamara\AppData\Roaming\ASP.NET\Https:/root/.aspnet/https:ro
+    - C:\Users\scamara\AppData\Roaming\Microsoft\UserSecrets:/root/.microsoft/usersecrets:ro
+version: '3.4'
