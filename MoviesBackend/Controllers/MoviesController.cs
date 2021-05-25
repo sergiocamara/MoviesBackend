@@ -25,7 +25,7 @@ namespace MoviesBackend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Movie>>> GetMovie()
         {
-            return await _context.Movie.ToListAsync();
+            return await _context.Movie.OrderByDescending(x => x.Rate).ToListAsync();
         }
 
         // GET: api/Movies/5
@@ -40,6 +40,21 @@ namespace MoviesBackend.Controllers
             }
 
             return movie;
+        }
+
+        // GET: api/Movies/5
+        [HttpGet]
+        [Route("search/{title}")]
+        public async Task<ActionResult<IEnumerable<Movie>>> GetMovie(string title)
+        {
+            var movies = await _context.Movie.Where(i => i.Title.Contains(title)).ToListAsync();
+
+            if (movies == null)
+            {
+                return NotFound();
+            }
+
+            return movies;
         }
 
         // PUT: api/Movies/5
