@@ -52,6 +52,13 @@ namespace MoviesBackend
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MoviesBackend", Version = "v1" });
             });
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                     builder => builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -69,7 +76,8 @@ namespace MoviesBackend
             app.UseRouting();
 
             app.UseAuthorization();
-            app.UseCors(builder => builder.WithOrigins("http://localhost:4200").AllowAnyHeader());
+            //app.UseCors(builder => builder.WithOrigins("http://localhost:4200").AllowAnyHeader());
+            app.UseCors("CorsPolicy");
 
 
             app.UseEndpoints(endpoints =>

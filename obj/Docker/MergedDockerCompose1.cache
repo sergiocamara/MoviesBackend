@@ -1,4 +1,15 @@
 services:
+  db:
+    environment:
+      MYSQL_DATABASE: Movies
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_USER: movies
+    image: mysql/mysql-server:5.7
+    ports:
+    - published: 3306
+      target: 3306
   moviesbackend:
     build:
       context: C:\Users\scamara\Documents\Movies\Backend\MoviesBackend
@@ -8,6 +19,9 @@ services:
         com.microsoft.visual-studio.project-name: MoviesBackend
       target: base
     container_name: MoviesBackend
+    depends_on:
+      db:
+        condition: service_started
     entrypoint: tail -f /dev/null
     environment:
       ASPNETCORE_ENVIRONMENT: Development
@@ -35,4 +49,4 @@ services:
     - C:\Program Files\dotnet\sdk\NuGetFallbackFolder:/root/.nuget/fallbackpackages:ro
     - C:\Users\scamara\.nuget\packages:/root/.nuget/packages:ro
     - C:\Users\scamara\Documents\Movies\Backend\MoviesBackend:/src:rw
-version: '3.4'
+version: '2'

@@ -3,7 +3,7 @@ version: '2'
 services:
   moviesbackend:
     image: moviesbackend:dev
-    container_name: MoviesBackend_1
+    container_name: MoviesBackend
     build:
       target: base
       labels:

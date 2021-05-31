@@ -2,7 +2,7 @@ version: '2'
 
 services:
   moviesbackend:
-    container_name: MoviesBackend_1
+    container_name: MoviesBackend
     build:
       labels:
         com.microsoft.created-by: "visual-studio"
